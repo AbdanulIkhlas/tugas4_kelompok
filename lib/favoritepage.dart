@@ -3,10 +3,12 @@ import 'package:tugas4_kelompok/data/site.dart';
 import 'package:tugas4_kelompok/sitemanager.dart';
 
 class FavoritePage extends StatefulWidget {
-  const FavoritePage({super.key});
+  const FavoritePage({Key? key});
 
   @override
-  State<FavoritePage> createState() => _FavoritePageState();
+  State<StatefulWidget> createState() {
+    return _FavoritePageState();
+  }
 }
 
 class _FavoritePageState extends State<FavoritePage> {
@@ -14,11 +16,16 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
+    List<int> favoriteIndices = _siteManager.getFavoriteSites();
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Favorite Sites'),
+      ),
       body: ListView.builder(
-        itemCount: _siteManager.favoriteIndices.length,
+        itemCount: favoriteIndices.length,
         itemBuilder: (BuildContext context, int index) {
-          final favoriteIndex = _siteManager.favoriteIndices.elementAt(index);
+          final favoriteIndex = favoriteIndices[index];
           final site = GenerateSite.getDataSites()[favoriteIndex];
           return Card(
             child: ListTile(
@@ -33,14 +40,6 @@ class _FavoritePageState extends State<FavoritePage> {
                   Text(site.url),
                   Text(site.description),
                 ],
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.star),
-                onPressed: () {
-                  setState(() {
-                    _siteManager.toggleFavorite(favoriteIndex);
-                  });
-                },
               ),
             ),
           );
