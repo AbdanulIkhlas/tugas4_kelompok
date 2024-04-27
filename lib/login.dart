@@ -1,45 +1,45 @@
-// import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas4_kelompok/homepage.dart';
 
-class loginPage extends StatefulWidget {
-  const loginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key});
 
   @override
-  loginMenu createState() => loginMenu();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class loginMenu extends State<loginPage> {
-
+class _LoginPageState extends State<StatefulWidget> {
   // Untuk akses nilai inputan
-  final TextEditingController userC = TextEditingController();
-  final TextEditingController passC = TextEditingController();
+  final TextEditingController userController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
 
-  //Modul
-  late SharedPreferences logindata;
-  late bool newuser;
+  // Variabel untuk mengecek apakah pengguna sudah login sebelumnya atau tidak
+  late SharedPreferences loginData;
+  late bool newUser;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    check_if_already_login();
+    checkIfAlreadyLoggedIn();
   }
 
-  void check_if_already_login() async {
-    logindata = await SharedPreferences.getInstance();
-    newuser = (logindata.getBool('login') ?? true);
-    print("new user = $newuser");
-    if(newuser==false){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(),));
+  void checkIfAlreadyLoggedIn() async {
+    loginData = await SharedPreferences.getInstance();
+    newUser = (loginData.getBool('login') ?? true);
+    print("new user = $newUser");
+    if (!newUser) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
     }
   }
 
   @override
-  void dispose(){
-    userC.dispose();
-    passC.dispose();
+  void dispose() {
+    userController.dispose();
+    passController.dispose();
     super.dispose();
   }
 
@@ -55,75 +55,102 @@ class loginMenu extends State<loginPage> {
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('TUGAS TPM 4',
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.teal.shade400, Colors.teal.shade200],
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'TUGAS TPM 4',
                     style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.teal,
-                        fontWeight: FontWeight.w500)),
-                Icon(Icons.join_full, size: 100),
-                const SizedBox(height: 32.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0), // Penambahan padding sumbu x
-                  child: TextField(
-                    controller: userC,
-                    decoration: const InputDecoration(
-                      hintText: 'Username',
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0), // Penambahan padding sumbu x
-                  child: TextField(
-                    controller: passC,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      hintText: 'Password',
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 32.0),
-                ElevatedButton(
-                  child: const Text('Login'),
-                  onPressed:() {
-                    String getName=userC.text;
-                    String getPass=passC.text;
-                    if(getName!="" && getPass=="tugas4"){
-                      print("LOGIN SUCCESFULL");
-                      logindata.setBool('login', false);
-                      logindata.setString('username', getName);
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(),));
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Error'),
-                          content: const Text('Incorrect username or password.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text('OK'),
-                            ),
-                          ],
+                  SizedBox(height: 32.0),
+                  Icon(Icons.lock_open, size: 100, color: Colors.white),
+                  SizedBox(height: 32.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextField(
+                      controller: userController,
+                      decoration: InputDecoration(
+                        hintText: 'Username',
+                        hintStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
                         ),
-                      );
-                    }
-                  },
-                ),
-              ],
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.3),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextField(
+                      controller: passController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        hintStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.3),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 32.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      String username = userController.text;
+                      String password = passController.text;
+                      if (username.isNotEmpty && password == "tugas4") {
+                        print("LOGIN SUCCESSFUL");
+                        loginData.setBool('login', false);
+                        loginData.setString('username', username);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text('Error'),
+                            content: Text('Incorrect username or password.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                    child: Text('Login'),
+                  ),
+                ],
+              ),
             ),
-          )
+          ),
         ),
       ),
     );
   }
 }
+
