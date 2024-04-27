@@ -4,11 +4,10 @@ import 'package:tugas4_kelompok/main.dart';
 import 'package:tugas4_kelompok/memberpage.dart';
 import 'package:tugas4_kelompok/prima.dart';
 import 'package:tugas4_kelompok/segitiga.dart';
+import 'package:tugas4_kelompok/sitepage.dart';
 
 class MenuPage extends StatefulWidget {
-  const MenuPage({
-    super.key,
-  });
+  const MenuPage({super.key, });
 
   @override
   State<MenuPage> createState() => _MenuPageState();
@@ -20,7 +19,7 @@ class _MenuPageState extends State<MenuPage> {
   late String username = "";
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     initial();
   }
@@ -35,11 +34,7 @@ class _MenuPageState extends State<MenuPage> {
   void logout() {
     logindata.setBool('login', true);
     logindata.remove('username');
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MyApp(),
-        ));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp(),));
   }
 
   @override
@@ -56,17 +51,12 @@ class _MenuPageState extends State<MenuPage> {
             },
             child: Text(
               "LOGOUT",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
-          IconButton(
-              onPressed: () {
-                logout();
-              },
-              icon: Icon(Icons.logout_sharp))
+          IconButton(onPressed: () {
+            logout();
+          }, icon: Icon(Icons.logout_sharp))
         ],
       ),
       body: Center(
@@ -85,11 +75,7 @@ class _MenuPageState extends State<MenuPage> {
             SizedBox(height: 50.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DataKelompok(),
-                    ));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DataKelompok(),));
               },
               child: Text(
                 'Daftar Anggota',
@@ -98,19 +84,14 @@ class _MenuPageState extends State<MenuPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal,
                 minimumSize: Size(
-                  MediaQuery.of(context).size.width * 0.6,
-                  40,
+                  MediaQuery.of(context).size.width*0.6,40,
                 ),
               ),
             ),
             SizedBox(height: 15.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PrimaPage(),
-                    ));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PrimaPage(),));
               },
               child: Text(
                 'Bilangan Prima',
@@ -119,19 +100,14 @@ class _MenuPageState extends State<MenuPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal.withOpacity(0.5),
                 minimumSize: Size(
-                  MediaQuery.of(context).size.width * 0.6,
-                  40,
+                  MediaQuery.of(context).size.width*0.6,40,
                 ),
               ),
             ),
             SizedBox(height: 15.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SegitigaPage(),
-                    ));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SegitigaPage(),));
               },
               child: Text(
                 'Hitung Segitiga',
@@ -140,15 +116,14 @@ class _MenuPageState extends State<MenuPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal.withOpacity(0.5),
                 minimumSize: Size(
-                  MediaQuery.of(context).size.width * 0.6,
-                  40,
+                  MediaQuery.of(context).size.width*0.6,40,
                 ),
               ),
             ),
             SizedBox(height: 15.0),
             ElevatedButton(
               onPressed: () {
-                // Tombol Daftar Situs ditekan
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SitePage(),));
               },
               child: Text(
                 'Daftar Situs',
@@ -157,15 +132,14 @@ class _MenuPageState extends State<MenuPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal.withGreen(100),
                 minimumSize: Size(
-                  MediaQuery.of(context).size.width * 0.6,
-                  40,
+                  MediaQuery.of(context).size.width*0.6,40,
                 ),
               ),
             ),
             SizedBox(height: 15.0),
             ElevatedButton(
               onPressed: () {
-                // Tombol Daftar Favorit ditekan
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SitePage(),));
               },
               child: Text(
                 'Daftar Favorit',
@@ -174,8 +148,7 @@ class _MenuPageState extends State<MenuPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal.withGreen(100),
                 minimumSize: Size(
-                  MediaQuery.of(context).size.width * 0.6,
-                  40,
+                  MediaQuery.of(context).size.width*0.6,40,
                 ),
               ),
             ),

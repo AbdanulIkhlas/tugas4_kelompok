@@ -8,13 +8,12 @@ class SegitigaPage extends StatefulWidget {
 }
 
 class _SegitigaPageState extends State<SegitigaPage> {
-
   double alas = 0.0;
   double tinggi = 0.0;
   double luas = 0.0;
-  double s1=0.0;
-  double s2=0.0;
-  double s3=0.0;
+  double s1 = 0.0;
+  double s2 = 0.0;
+  double s3 = 0.0;
   double keliling = 0.0;
 
   void hitungLuas() {
@@ -56,7 +55,11 @@ class _SegitigaPageState extends State<SegitigaPage> {
                         color: Colors.teal,
                       ),
                     ),
-                    Icon(Icons.change_history_outlined, color: Colors.teal.withGreen(350),size: 50.0,),
+                    Icon(
+                      Icons.change_history_outlined,
+                      color: Colors.teal.withGreen(350),
+                      size: 50.0,
+                    ),
                     SizedBox(height: 20.0),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.3,
@@ -140,7 +143,11 @@ class _SegitigaPageState extends State<SegitigaPage> {
                         color: Colors.teal,
                       ),
                     ),
-                    Icon(Icons.change_history_outlined, color: Colors.teal.withGreen(350),size: 50.0,),
+                    Icon(
+                      Icons.change_history_outlined,
+                      color: Colors.teal.withGreen(350),
+                      size: 50.0,
+                    ),
                     SizedBox(height: 20.0),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.3,
@@ -242,7 +249,8 @@ class _SegitigaPageState extends State<SegitigaPage> {
           ),
         ),
       ),
-
     );
   }
 }
+
+

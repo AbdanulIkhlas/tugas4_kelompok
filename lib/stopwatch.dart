@@ -5,7 +5,8 @@ class StopwatchPage extends StatefulWidget {
   _StopwatchPage createState() => _StopwatchPage();
 }
 
-class _StopwatchPage extends State<StopwatchPage> with SingleTickerProviderStateMixin {
+class _StopwatchPage extends State<StopwatchPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   Stopwatch _stopwatch = Stopwatch();
   bool _isRunning = false;
@@ -17,8 +18,8 @@ class _StopwatchPage extends State<StopwatchPage> with SingleTickerProviderState
       vsync: this,
       duration: Duration(milliseconds: 50),
     )..addListener(() {
-      setState(() {});
-    });
+        setState(() {});
+      });
     _controller.repeat();
   }
 

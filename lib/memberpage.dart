@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 class DataKelompok extends StatelessWidget {
+
   final List<Map<String, dynamic>> people = [
     {
       'name': 'Muhammad Abdanul Ikhlas',
@@ -46,7 +47,7 @@ class DataKelompok extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             backgroundImage:
-                                AssetImage(people[index]['picture']),
+                            AssetImage(people[index]['picture']),
                             radius: 30,
                           ),
                           SizedBox(width: 50),
