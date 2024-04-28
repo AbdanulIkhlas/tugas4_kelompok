@@ -19,48 +19,67 @@ class _SitePageState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Sites'),
+        title: Text(
+          'List Sites',
+          style: TextStyle(color: Colors.white), // Tambahkan style
+        ),
+        backgroundColor: Colors.teal,
       ),
-      body: ListView.builder(
-        itemCount: GenerateSite.getDataSites().length,
-        itemBuilder: (BuildContext context, int index) {
-          final site = GenerateSite.getDataSites()[index];
-          return Card(
-            child: ListTile(
-              leading: Image(
-                image: AssetImage(site.image),
-                width: 50,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.teal.withOpacity(0.8), Colors.white],
+          ),
+        ),
+        child: ListView.builder(
+          itemCount: GenerateSite.getDataSites().length,
+          itemBuilder: (BuildContext context, int index) {
+            final site = GenerateSite.getDataSites()[index];
+            return Card(
+              elevation: 3,
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
               ),
-              title: Text(site.name),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(site.url),
-                  Text(site.description),
-                ],
+              child: ListTile(
+                leading: Image(
+                  image: AssetImage(site.image),
+                  width: 50,
+                ),
+                title: Text(site.name),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(site.url),
+                    Text(site.description),
+                  ],
+                ),
+                trailing: IconButton(
+                  icon: _siteManager.favoriteIndices.contains(index)
+                      ? Icon(Icons.star, color: Colors.orange)
+                      : Icon(Icons.star_border),
+                  onPressed: () {
+                    setState(() {
+                      _siteManager.toggleFavorite(index);
+                    });
+                    // Tampilkan Snackbar untuk memberitahu pengguna bahwa situs telah difavoritkan
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            _siteManager.favoriteIndices.contains(index)
+                                ? 'Site favorited!'
+                                : 'Site unfavorited!'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
+                ),
               ),
-              trailing: IconButton(
-                icon: _siteManager.favoriteIndices.contains(index)
-                    ? Icon(Icons.star)
-                    : Icon(Icons.star_border),
-                onPressed: () {
-                  setState(() {
-                    _siteManager.toggleFavorite(index);
-                  });
-                  // Tampilkan Snackbar untuk memberitahu pengguna bahwa situs telah difavoritkan
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(_siteManager.favoriteIndices.contains(index)
-                          ? 'Site favorited!'
-                          : 'Site unfavorited!'),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                },
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -70,6 +89,7 @@ class _SitePageState extends State<StatefulWidget> {
           );
         },
         child: Icon(Icons.favorite),
+        backgroundColor: Colors.orange,
       ),
     );
   }

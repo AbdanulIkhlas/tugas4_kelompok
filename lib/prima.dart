@@ -30,8 +30,7 @@ class _MyHomePageState extends State<PrimaPage> {
             break;
           }
         }
-        _prima =
-            '${n.toInt()} ${prima ? 'adalah bilangan prima' : 'bukan bilangan prima'}';
+        _prima = '${n.toInt()} ${prima ? 'adalah bilangan prima' : 'bukan bilangan prima'}';
       }
     }
     setState(() {});

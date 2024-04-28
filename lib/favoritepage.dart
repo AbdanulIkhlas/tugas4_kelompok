@@ -20,30 +20,48 @@ class _FavoritePageState extends State<FavoritePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favorite Sites'),
+        title: Text(
+          'Favorite Sites',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.teal,
       ),
-      body: ListView.builder(
-        itemCount: favoriteIndices.length,
-        itemBuilder: (BuildContext context, int index) {
-          final favoriteIndex = favoriteIndices[index];
-          final site = GenerateSite.getDataSites()[favoriteIndex];
-          return Card(
-            child: ListTile(
-              leading: Image(
-                image: AssetImage(site.image),
-                width: 50,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.teal.withOpacity(0.8), Colors.white],
+          ),
+        ),
+        child: ListView.builder(
+          itemCount: favoriteIndices.length,
+          itemBuilder: (BuildContext context, int index) {
+            final favoriteIndex = favoriteIndices[index];
+            final site = GenerateSite.getDataSites()[favoriteIndex];
+            return Card(
+              elevation: 3,
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
               ),
-              title: Text(site.name),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(site.url),
-                  Text(site.description),
-                ],
+              child: ListTile(
+                leading: Image(
+                  image: AssetImage(site.image),
+                  width: 50,
+                ),
+                title: Text(site.name),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(site.url),
+                    Text(site.description),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
