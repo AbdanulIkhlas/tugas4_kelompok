@@ -5,7 +5,7 @@ import 'package:tugas4_kelompok/sitemanager.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FavoritePage extends StatefulWidget {
-  const FavoritePage({Key? key});
+  const FavoritePage({super.key});
 
   @override
   State<FavoritePage> createState() => _FavoritePageState();
@@ -13,23 +13,20 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   final SiteManager _siteManager = SiteManager();
-  late SharedPreferences _prefs;
+  late List<int> _favoriteIndices = [];
 
   @override
   void initState() {
     super.initState();
-    _initSharedPreferences();
+    _loadFavoriteIndicesFromSharedPreferences();
   }
 
-  void _initSharedPreferences() async {
-    _prefs = await SharedPreferences.getInstance();
-  }
-
-  // Function to save favorite list to SharedPreferences
-  void _saveFavoritesToSharedPreferences() {
-    final favoriteIndices = _siteManager.favoriteIndices;
-    _prefs.setStringList('favorite_sites',
-        favoriteIndices.map((index) => index.toString()).toList());
+  Future<void> _loadFavoriteIndicesFromSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteIndices = prefs.getStringList('favorite_sites')?.map((index) => int.parse(index)).toList() ?? [];
+    setState(() {
+      _favoriteIndices = favoriteIndices;
+    });
   }
 
   // Function to launch website link in a new tab
@@ -50,11 +47,9 @@ class _FavoritePageState extends State<FavoritePage> {
             Navigator.pop(context);
           },
         ),
-        title: Text(
-          "Daftar Favorit",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.teal,
+        title: Text("Daftar Favorit",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.teal ,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -74,13 +69,16 @@ class _FavoritePageState extends State<FavoritePage> {
               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: ListTile(
                 onTap: () {
-                  _launchLink(site.url); // Launch link when ListTile is tapped
+                  _launchLink(site.url);
                 },
-                leading: Image(
-                  image: AssetImage(site.image),
-                  width: 100,
-                  height: 180,
-                  fit: BoxFit.cover,
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(
+                    site.image,
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 title: Text(
                   site.name,
@@ -98,28 +96,27 @@ class _FavoritePageState extends State<FavoritePage> {
                         color: Colors.blue,
                         decoration: TextDecoration.underline,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       site.description,
-                      maxLines: 4,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.star, color: Colors.amber),
+                  icon: _siteManager.favoriteIndices.contains(index)
+                      ? Icon(Icons.star, color: Colors.amber)
+                      : Icon(Icons.star_border),
                   onPressed: () {
                     setState(() {
                       _siteManager.toggleFavorite(favoriteIndex);
-                      _saveFavoritesToSharedPreferences();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(_siteManager.favoriteIndices
-                                  .contains(favoriteIndex)
-                              ? 'Site Favorited'
-                              : 'Site Unfavorited'),
+                          content: Text(
+                              _siteManager.favoriteIndices.contains(index)
+                                  ? 'Site Favorited'
+                                  : 'Site Unfavorited'),
                           duration: Duration(seconds: 1),
                         ),
                       );

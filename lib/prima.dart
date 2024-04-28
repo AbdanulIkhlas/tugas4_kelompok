@@ -55,36 +55,45 @@ class _MyHomePageState extends State<PrimaPage> {
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.teal,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                textAlign: TextAlign.center,
-                controller: _controller,
-                decoration: InputDecoration(
-                  hintText: 'Masukkan bilangan',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(color: Colors.teal),
-                  ),
-                  contentPadding: EdgeInsets.all(20.0),
-                ),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 25),
-              ElevatedButton(
-                onPressed: _cekPrima,
-                child: Text('Cek Bilangan Prima'),
-              ),
-              SizedBox(height: 20),
-              Text(_prima),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.teal.withOpacity(0.8), Colors.white],
           ),
         ),
-      ),
+        child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    textAlign: TextAlign.center,
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: 'Masukkan bilangan',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.teal),
+                      ),
+                      contentPadding: EdgeInsets.all(20.0),
+                    ),
+                    keyboardType: TextInputType.number,
+                  ),
+                  SizedBox(height: 25),
+                  ElevatedButton(
+                    onPressed: _cekPrima,
+                    child: Text('Cek Bilangan Prima'),
+                  ),
+                  SizedBox(height: 20),
+                  Text(_prima),
+                ],
+              ),
+            ),
+          ),
+      )
     );
   }
 }
