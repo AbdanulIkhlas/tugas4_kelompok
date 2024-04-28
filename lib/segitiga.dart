@@ -61,7 +61,7 @@ class _SegitigaPageState extends State<SegitigaPage> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 142, 181, 177),
+                            color: Color.fromARGB(255, 232, 234, 233),
                           ),
                         ),
                         Icon(
@@ -149,7 +149,7 @@ class _SegitigaPageState extends State<SegitigaPage> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 142, 181, 177),
+                            color: Color.fromARGB(255, 232, 234, 233),
                           ),
                         ),
                         Icon(
