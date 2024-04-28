@@ -1,16 +1,25 @@
-# tugas4_kelompok
+# Tugas 4 TPM (Kelompok)
 
-A new Flutter project.
+Membuat aplikasi mobile sederhana yang terdiri dari :
+- Menu Login
+- Menu Halaman Utama, yang terdiri dari 5 sub menu (Daftar Anggota, Menentukan bilangan prima, Menghitung luas dan keliling segitiga, Daftar situs rekomendasi "Manhwa", dan Menu Favorite)
+- Menu Stopwatch
+- Menu Bantuan (Cara Penggunaan Aplikasi)
+- Memiliki bottom navigation bar untuk 3 menu (Halaman utama, Stopwatch, dan Bantuan)
 
-## Getting Started
+Anggota Kelompok :
 
-This project is a starting point for a Flutter application.
+- Muhammad Abdanul Ikhlas - 123210009
+- Muhammad Harish Wijaya - 123210011
+- Yoga Agatha Pasaribu - 123210025
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<h2 align="center">Tampilan</h2>
+<p align="center">
+    <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs1.png" alt="Banner" width="157">
+    <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs2.png" alt="Banner" width="157">
+    <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs3.png" alt="Banner" width="157">
+    <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs4.png" alt="Banner" width="157">
+    <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs5.png" alt="Banner" width="157">
+    <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs6.png" alt="Banner" width="157">
+</p>

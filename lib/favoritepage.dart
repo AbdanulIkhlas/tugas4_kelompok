@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas4_kelompok/data/site.dart';
 import 'package:tugas4_kelompok/sitemanager.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key});
@@ -13,41 +13,32 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   final SiteManager _siteManager = SiteManager();
-  late List<int> _favoriteIndices = [];
+  late SharedPreferences _prefs;
 
   @override
   void initState() {
     super.initState();
-    _loadFavoriteIndicesFromSharedPreferences();
+    _initSharedPreferences();
   }
 
-  Future<void> _loadFavoriteIndicesFromSharedPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    final favoriteIndices =
-        prefs.getStringList('favorite_sites')?.map((index) => int.parse(index)).toList() ?? [];
-    setState(() {
-      _favoriteIndices = favoriteIndices;
-    });
+  void _initSharedPreferences() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  // Function to save favorite list to SharedPreferences
+  void _saveFavoritesToSharedPreferences() {
+    final favoriteIndices = _siteManager.favoriteIndices;
+    _prefs.setStringList('favorite_sites',
+        favoriteIndices.map((index) => index.toString()).toList());
   }
 
   // Function to launch website link in a new tab
   void _launchLink(String url) async {
     if (await canLaunch(url)) {
-      await launch(url, forceWebView: false, enableJavaScript: true);
+      await launch(url);
     } else {
       throw 'Could not launch $url';
     }
-  }
-
-  // Function to show notification when site is favorited or unfavorited
-  void _showNotification(bool favorited) {
-    String message = favorited ? 'Site Favorited' : 'Site Unfavorited';
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 1),
-      ),
-    );
   }
 
   @override
@@ -74,9 +65,9 @@ class _FavoritePageState extends State<FavoritePage> {
           ),
         ),
         child: ListView.builder(
-          itemCount: _favoriteIndices.length,
+          itemCount: _siteManager.favoriteIndices.length,
           itemBuilder: (BuildContext context, int index) {
-            final favoriteIndex = _favoriteIndices[index];
+            final favoriteIndex = _siteManager.favoriteIndices.elementAt(index);
             final site = GenerateSite.getDataSites()[favoriteIndex];
             return Card(
               elevation: 5,
@@ -87,25 +78,51 @@ class _FavoritePageState extends State<FavoritePage> {
                 },
                 leading: Image(
                   image: AssetImage(site.image),
-                  width: 50,
+                  width: 100,
+                  height: 180,
+                  fit: BoxFit.cover,
                 ),
-                title: Text(site.name),
+                title: Text(
+                  site.name,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       site.url,
-                      style: TextStyle(color: Colors.blue), // Style link text
+                      style: TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    Text(site.description),
+                    Text(
+                      site.description,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ],
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.star),
+                  icon: Icon(Icons.star, color: Colors.amber),
                   onPressed: () {
                     setState(() {
                       _siteManager.toggleFavorite(favoriteIndex);
-                      _showNotification(_siteManager.favoriteIndices.contains(favoriteIndex));
+                      _saveFavoritesToSharedPreferences();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(_siteManager.favoriteIndices
+                                  .contains(favoriteIndex)
+                              ? 'Site Favorited'
+                              : 'Site Unfavorited'),
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
                     });
                   },
                 ),
