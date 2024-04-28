@@ -6,34 +6,45 @@ class PrimaPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<PrimaPage> {
-  final _controller = TextEditingController();
+    final _controller = TextEditingController();
   String _prima = '';
 
   void _cekPrima() {
-    double n = double.tryParse(_controller.text) ?? 0;
-    // int n = int.tryParse(_controller.text) ?? 0;
-    if (n.isNaN) {
-      _prima = 'Input tidak valid';
+    double n;
+    try {
+      n = double.parse(_controller.text);
+    } catch (e) {
+      setState(() {
+        _prima = 'Input tidak valid';
+      });
       return;
     }
 
-    if (n.truncate() != n) {
-      _prima = '\nBilangan desimal tidak termasuk bilangan prima';
-    } else {
-      if (n <= 1) {
+    if (n <= 0 || n.truncate() != n) {
+      setState(() {
+        _prima = 'Input harus bilangan bulat positif';
+      });
+      return;
+    }
+
+    if (n <= 1) {
+      setState(() {
         _prima = '${n.toInt()} bukan bilangan prima';
-      } else {
-        bool prima = true;
-        for (int i = 2; i <= n / 2; i++) {
-          if (n % i == 0) {
-            prima = false;
-            break;
-          }
-        }
-        _prima = '${n.toInt()} ${prima ? 'adalah bilangan prima' : 'bukan bilangan prima'}';
+      });
+      return;
+    }
+
+    bool prima = true;
+    for (int i = 2; i <= n / 2; i++) {
+      if (n % i == 0) {
+        prima = false;
+        break;
       }
     }
-    setState(() {});
+    setState(() {
+      _prima =
+          '${n.toInt()} ${prima ? 'adalah bilangan prima' : 'bukan bilangan prima'}';
+    });
   }
 
   @override
@@ -45,12 +56,12 @@ class _MyHomePageState extends State<PrimaPage> {
         backgroundColor: Colors.teal,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 250.0, // Atur lebar sesuai kebutuhan Anda
-              child: TextField(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
                 textAlign: TextAlign.center,
                 controller: _controller,
                 decoration: InputDecoration(
@@ -62,27 +73,16 @@ class _MyHomePageState extends State<PrimaPage> {
                   contentPadding: EdgeInsets.all(20.0),
                 ),
                 keyboardType: TextInputType.number,
-                onChanged: (String value) {
-                  double? parsedValue = double.tryParse(value);
-                  if (parsedValue! <= 0) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Input harus positif'),
-                        duration: Duration(seconds: 1),
-                      ),
-                    );
-                  }
-                },
               ),
-            ),
-            SizedBox(height: 25),
-            ElevatedButton(
-              onPressed: _cekPrima,
-              child: Text('Cek Bilangan Prima'),
-            ),
-            SizedBox(height: 20),
-            Text(_prima),
-          ],
+              SizedBox(height: 25),
+              ElevatedButton(
+                onPressed: _cekPrima,
+                child: Text('Cek Bilangan Prima'),
+              ),
+              SizedBox(height: 20),
+              Text(_prima),
+            ],
+          ),
         ),
       ),
     );
