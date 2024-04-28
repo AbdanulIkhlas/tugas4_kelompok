@@ -22,4 +22,6 @@ Anggota Kelompok :
     <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs4.png" alt="Banner" width="157">
     <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs5.png" alt="Banner" width="157">
     <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs6.png" alt="Banner" width="157">
+    <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs7.png" alt="Banner" width="157">
+    <img src="https://github.com/AbdanulIkhlas/tugas4_kelompok/blob/main/docs/docs8.png" alt="Banner" width="157">
 </p>
