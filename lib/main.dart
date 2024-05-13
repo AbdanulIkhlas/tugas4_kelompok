@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tugas4_kelompok/login.dart';
+import 'package:tugas4_kelompok/model/login_model.dart';
 
-void main() {
+String loginBox = 'loginBox';
+
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter<LoginModel>(LoginModelAdapter());
+  await Hive.openBox<LoginModel>(loginBox);
   runApp(const MyApp());
 }
 

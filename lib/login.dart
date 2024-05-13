@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas4_kelompok/homepage.dart';
+import 'package:tugas4_kelompok/main.dart';
+import 'package:tugas4_kelompok/model/login_model.dart';
+import 'package:tugas4_kelompok/register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
@@ -116,34 +120,56 @@ class _LoginPageState extends State<StatefulWidget> {
                   SizedBox(height: 32.0),
                   ElevatedButton(
                     onPressed: () {
-                      String username = userController.text;
-                      String password = passController.text;
-                      if (username.isNotEmpty && password == "tugas4") {
-                        print("LOGIN SUCCESSFUL");
-                        loginData.setBool('login', false);
-                        loginData.setString('username', username);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text('Error'),
-                            content: Text('Incorrect username or password.'),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: Text('OK'),
-                              ),
-                            ],
-                          ),
-                        );
+                      String user = userController.text;
+                      String pass = passController.text;
+                      var box = Hive.box<LoginModel>(loginBox);
+
+                      for (var item in box.values) {
+                        if (item.username == user && item.password == pass) {
+                          print("LOGIN SUCCESSFUL");
+                          loginData.setBool('login', false);
+                          loginData.setString('username', user);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                          );
+                          return;
+                        }
                       }
+
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Error'),
+                          content: Text('Incorrect username or password.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+
                     },
                     child: Text('Login'),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Register dahulu jika belum ada akun !",
+                    style: TextStyle(color: Colors.black45),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterPage(),
+                            ));
+                      },
+                      child: Text('Register'))
                 ],
               ),
             ),
@@ -153,4 +179,3 @@ class _LoginPageState extends State<StatefulWidget> {
     );
   }
 }
-

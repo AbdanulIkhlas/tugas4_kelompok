@@ -105,9 +105,10 @@ class _FavoritePageState extends State<FavoritePage> {
                   ],
                 ),
                 trailing: IconButton(
-                  icon: _siteManager.favoriteIndices.contains(index)
-                      ? Icon(Icons.star, color: Colors.amber)
-                      : Icon(Icons.star_border),
+                  icon: Icon(Icons.star, color: Colors.amber,),
+                  // icon: _siteManager.favoriteIndices.contains(index)
+                  //     ? Icon(Icons.star, color: Colors.amber)
+                  //     : Icon(Icons.star_border),
                   onPressed: () {
                     setState(() {
                       _siteManager.toggleFavorite(favoriteIndex);
