@@ -20,7 +20,7 @@ class _MyHomePageState extends State<PrimaPage> {
       return;
     }
 
-    if (n <= 0 || n.truncate() != n) {
+    if (n < 0 || n.truncate() != n) {
       setState(() {
         _prima = 'Input harus bilangan bulat positif';
       });
